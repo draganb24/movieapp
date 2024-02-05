@@ -5,27 +5,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MoviePosterComponent } from 'app/shared/movie-poster.component';
 import { Observable, forkJoin, map } from 'rxjs';
-
-interface MovieResult {
-  results: any[];
-}
-
-interface Category {
-  title: string;
-  resultKey: keyof HomeResults;
-}
-
-interface HomeResults {
-  bannerResult: MovieResult;
-  trendingMovieResult: MovieResult;
-  actionMovieResult: MovieResult;
-  adventureMovieResult: MovieResult;
-  animationMovieResult: MovieResult;
-  comedyMovieResult: MovieResult;
-  documentaryMovieResult: MovieResult;
-  scienceFictionMovieResult: MovieResult;
-  thrillerMovieResult: MovieResult;
-}
+import { MovieResult } from 'app/models/movie-result.interface';
+import { HomeResults } from 'app/models/home-results.interface';
+import { MovieCategory } from 'app/models/movie-category.interface';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +30,7 @@ export class HomeComponent implements OnInit {
     thrillerMovieResult: { results: [] },
   };
 
-  categories: Category[] = [
+  categories: MovieCategory[] = [
     { title: 'Trending Movies', resultKey: 'trendingMovieResult' },
     { title: 'Action Movies', resultKey: 'actionMovieResult' },
     { title: 'Adventure Movies', resultKey: 'adventureMovieResult' },
