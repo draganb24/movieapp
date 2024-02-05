@@ -9,6 +9,11 @@ interface MovieResult {
   results: any[];
 }
 
+interface Category {
+  title: string;
+  resultKey: keyof HomeResults;
+}
+
 interface HomeResults {
   bannerResult: MovieResult;
   trendingMovieResult: MovieResult;
@@ -41,6 +46,17 @@ export class HomeComponent implements OnInit {
     scienceFictionMovieResult: { results: [] },
     thrillerMovieResult: { results: [] },
   };
+
+  categories: Category[] = [
+    { title: 'Trending Movies', resultKey: 'trendingMovieResult' },
+    { title: 'Action Movies', resultKey: 'actionMovieResult' },
+    { title: 'Adventure Movies', resultKey: 'adventureMovieResult' },
+    { title: 'Animation Movies', resultKey: 'animationMovieResult' },
+    { title: 'Comedy Movies', resultKey: 'comedyMovieResult' },
+    { title: 'Documentary Movies', resultKey: 'documentaryMovieResult' },
+    { title: 'Science-Fiction Movies', resultKey: 'scienceFictionMovieResult' },
+    { title: 'Thriller Movies', resultKey: 'thrillerMovieResult' }
+  ];
 
   constructor(private service: MovieApiService, private title: Title, private meta: Meta) {
   }
