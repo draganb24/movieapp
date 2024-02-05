@@ -5,38 +5,48 @@ import { MOVIE_API_CONFIG } from '../config/movie-api.config';
 import { MovieGenres } from '../enum/movie-genres.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class MovieApiService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   baseurl = MOVIE_API_CONFIG.baseUrl;
   apikey = MOVIE_API_CONFIG.apiKey;
 
   bannerApiData(): Observable<any> {
-    return this.http.get(`${this.baseurl}/trending/all/week?api_key=${this.apikey}`);
+    return this.http.get(
+      `${this.baseurl}/trending/all/week?api_key=${this.apikey}`
+    );
   }
 
   trendingMovieApiData(): Observable<any> {
-    return this.http.get(`${this.baseurl}/trending/movie/day?api_key=${this.apikey}`);
+    return this.http.get(
+      `${this.baseurl}/trending/movie/day?api_key=${this.apikey}`
+    );
   }
 
   getSearchMovie(data: any): Observable<any> {
-    return this.http.get(`${this.baseurl}/search/movie?api_key=${this.apikey}&query=${data.movieName}`);
+    return this.http.get(
+      `${this.baseurl}/search/movie?api_key=${this.apikey}&query=${data.movieName}`
+    );
   }
 
   getMovieDetails(data: any): Observable<any> {
-    return this.http.get(`${this.baseurl}/movie/${data}?api_key=${this.apikey}`)
+    return this.http.get(
+      `${this.baseurl}/movie/${data}?api_key=${this.apikey}`
+    );
   }
 
   getMovieVideo(data: any): Observable<any> {
-    return this.http.get(`${this.baseurl}/movie/${data}/videos?api_key=${this.apikey}`)
+    return this.http.get(
+      `${this.baseurl}/movie/${data}/videos?api_key=${this.apikey}`
+    );
   }
 
   getMovieCast(data: any): Observable<any> {
-    return this.http.get(`${this.baseurl}/movie/${data}/credits?api_key=${this.apikey}`)
+    return this.http.get(
+      `${this.baseurl}/movie/${data}/credits?api_key=${this.apikey}`
+    );
   }
 
   fetchActionMovies(): Observable<any> {
@@ -77,5 +87,4 @@ export class MovieApiService {
 
   // Add a mapped type to allow indexing with a string
   [key: string]: ((...args: any[]) => Observable<any>) | any;
-
 }

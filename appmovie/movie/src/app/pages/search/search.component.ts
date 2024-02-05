@@ -10,29 +10,37 @@ import { RouterModule } from '@angular/router';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule]
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
 })
 export class SearchComponent implements OnInit {
-
-  constructor(private service: MovieApiService, private title: Title, private meta: Meta) {
-    this.title.setTitle('Search movies - showtime');
-    this.meta.updateTag({ name: 'description', content: 'search here movies like avatar, war etc' });
-  }
+  constructor(
+    private service: MovieApiService,
+    private title: Title,
+    private meta: Meta
+  ) {}
 
   ngOnInit(): void {
+    this.setTitleAndMetaTags();
+  }
+
+  private setTitleAndMetaTags() {
+    this.title.setTitle('Search movies - showtime');
+    this.meta.updateTag({
+      name: 'description',
+      content: 'search here movies like avatar, war etc',
+    });
   }
 
   searchResult: any;
   searchForm = new FormGroup({
-    'movieName': new FormControl(null)
+    movieName: new FormControl(null),
   });
 
   submitForm() {
     console.log(this.searchForm.value, 'searchform#');
-    this.service.getSearchMovie(this.searchForm.value).subscribe((result) => {
+    this.service.getSearchMovie(this.searchForm.value).subscribe(result => {
       console.log(result, 'searchmovie##');
       this.searchResult = result.results;
     });
   }
-
 }

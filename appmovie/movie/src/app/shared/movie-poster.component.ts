@@ -4,11 +4,16 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-movie-poster',
   template: `
-    <img [src]="getImageUrl()" loading="lazy" class="rowimg largeposter" alt="..." [routerLink]="['/movie', movie.id]">
+    <img
+      [src]="getImageUrl()"
+      loading="lazy"
+      class="rowimg largeposter"
+      alt="..."
+      [routerLink]="['/movie', movie.id]" />
   `,
   styleUrls: ['./movie-poster.component.css'],
   standalone: true,
-  imports: [RouterModule]
+  imports: [RouterModule],
 })
 export class MoviePosterComponent {
   @Input() movie: any;

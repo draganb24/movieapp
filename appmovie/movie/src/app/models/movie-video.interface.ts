@@ -1,4 +1,3 @@
 export interface MovieVideo {
-    results: { type: string; key: string }[];
-  }
-  
+  results: { type: string; key: string }[];
+}

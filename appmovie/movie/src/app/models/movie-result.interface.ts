@@ -1,4 +1,3 @@
 export interface MovieResult {
-    results: any[];
-  }
-  
+  results: any[];
+}

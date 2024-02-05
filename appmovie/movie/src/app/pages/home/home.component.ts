@@ -14,10 +14,9 @@ import { MovieCategory } from 'app/models/movie-category.interface';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule, MoviePosterComponent]
+  imports: [CommonModule, RouterModule, MoviePosterComponent],
 })
 export class HomeComponent implements OnInit {
-
   results: HomeResults = {
     bannerResult: { results: [] },
     trendingMovieResult: { results: [] },
@@ -38,11 +37,14 @@ export class HomeComponent implements OnInit {
     { title: 'Comedy Movies', resultKey: 'comedyMovieResult' },
     { title: 'Documentary Movies', resultKey: 'documentaryMovieResult' },
     { title: 'Science-Fiction Movies', resultKey: 'scienceFictionMovieResult' },
-    { title: 'Thriller Movies', resultKey: 'thrillerMovieResult' }
+    { title: 'Thriller Movies', resultKey: 'thrillerMovieResult' },
   ];
 
-  constructor(private service: MovieApiService, private title: Title, private meta: Meta) {
-  }
+  constructor(
+    private service: MovieApiService,
+    private title: Title,
+    private meta: Meta
+  ) {}
 
   ngOnInit(): void {
     this.setTitleAndMetaTags();
@@ -51,7 +53,10 @@ export class HomeComponent implements OnInit {
 
   private setTitleAndMetaTags() {
     this.title.setTitle('Home - showtime');
-    this.meta.updateTag({ name: 'description', content: 'watch online movies' });
+    this.meta.updateTag({
+      name: 'description',
+      content: 'watch online movies',
+    });
   }
 
   private fetchData() {
@@ -81,13 +86,11 @@ export class HomeComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error fetching data:', error);
-      }
+      },
     });
   }
 
   private createRequest(apiMethod: string): Observable<MovieResult> {
-    return this.service[apiMethod]().pipe(
-      map((result: MovieResult) => result)
-    );
+    return this.service[apiMethod]().pipe(map((result: MovieResult) => result));
   }
 }

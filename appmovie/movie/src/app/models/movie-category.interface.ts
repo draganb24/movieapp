@@ -1,6 +1,6 @@
-import { HomeResults } from "./home-results.interface";
+import { HomeResults } from './home-results.interface';
 
 export interface MovieCategory {
-    title: string;
-    resultKey: keyof HomeResults;
-  }
+  title: string;
+  resultKey: keyof HomeResults;
+}

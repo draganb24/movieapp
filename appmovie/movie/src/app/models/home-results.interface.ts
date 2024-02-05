@@ -1,4 +1,4 @@
-import { MovieResult } from "./movie-result.interface";
+import { MovieResult } from './movie-result.interface';
 
 export interface HomeResults {
   bannerResult: MovieResult;
