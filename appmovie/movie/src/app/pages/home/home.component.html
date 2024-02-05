@@ -4,7 +4,7 @@
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="10000" *ngFor="let b of results.bannerResult.results; let i=index"
         [ngClass]="{active: i === 1}">
-        <img src="https://image.tmdb.org/t/p/original/{{ b.backdrop_path }}" class="d-block w-100" alt="...">
+        <img src="https://image.tmdb.org/t/p/original/{{ b.backdrop_path }}" loading="lazy" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h2>{{ b.original_title }}</h2>
           <p>{{ b.overview }}</p>
