@@ -1,27 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieApiService } from 'app/service/movie-api.service';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title} from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { map, filter, tap, forkJoin, Subject, takeUntil } from 'rxjs';
-
-interface MovieDetail {
-  original_title: string;
-  tagline: string;
-  overview: string;
-  backdrop_path: string;
-  poster_path: string;
-}
-
-interface MovieVideo {
-  results: { type: string; key: string }[];
-}
-
-interface MovieCast {
-  original_name: string;
-  character: string;
-  profile_path: string;
-}
+import { MovieDetail } from 'app/models/movie-detail.interface';
+import { MovieVideo } from 'app/models/movie-video.interface';
+import { MovieCast } from 'app/models/movie-cast.interface';
+import { MetaService } from 'app/service/meta.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -31,17 +17,15 @@ interface MovieCast {
   imports: [CommonModule]
 })
 
-
 export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private service: MovieApiService, private router: ActivatedRoute, private titleService: Title, private metaService: Meta) { }
+  constructor(private service: MovieApiService, private router: ActivatedRoute, private titleService: Title, private metaUpdateService: MetaService) { }
 
   getMovieDetailResult: MovieDetail | undefined;
   getMovieVideoResult: MovieVideo | undefined;
   getMovieCastResult: MovieCast[] | undefined;
-
 
   ngOnInit(): void {
     let getParamId = this.router.snapshot.paramMap.get('id');
@@ -87,20 +71,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   private updatePageMeta(): void {
     if (this.getMovieDetailResult) {
-      this.titleService.setTitle(`${this.getMovieDetailResult.original_title} | ${this.getMovieDetailResult.tagline}`);
-
-      this.metaService.updateTag({ name: 'title', content: this.getMovieDetailResult.original_title });
-      this.metaService.updateTag({ name: 'description', content: this.getMovieDetailResult.overview });
-
-      // Facebook Meta Tags
-      this.metaService.updateTag({ property: 'og:type', content: 'website' });
-      this.metaService.updateTag({ property: 'og:url', content: '' });
-      this.metaService.updateTag({ property: 'og:title', content: this.getMovieDetailResult.original_title });
-      this.metaService.updateTag({ property: 'og:description', content: this.getMovieDetailResult.overview });
-      this.metaService.updateTag({
-        property: 'og:image',
-        content: `https://image.tmdb.org/t/p/original/${this.getMovieDetailResult.backdrop_path}`
-      });
+      this.metaUpdateService.updatePageMeta(this.getMovieDetailResult);
     }
   }
 
