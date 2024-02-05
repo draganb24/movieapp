@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieApiService } from 'src/app/service/movie-api.service';
+import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MoviePosterComponent } from 'src/app/shared/movie-poster.component';
+import { MoviePosterComponent } from 'app/shared/movie-poster.component';
 
 interface MovieResult {
   results: any[];

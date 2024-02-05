@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MovieApiService } from 'src/app/service/movie-api.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

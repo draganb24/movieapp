@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MovieApiService } from 'src/app/service/movie-api.service';
+import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { map, filter, tap, forkJoin, Subject, takeUntil } from 'rxjs';
