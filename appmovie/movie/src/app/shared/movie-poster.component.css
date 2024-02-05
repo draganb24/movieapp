@@ -1,0 +1,14 @@
+.rowimg {
+    height: 300px;
+    margin-right: 7px;
+    transition: transform 450ms;
+}
+
+.rowimg:hover {
+    transform: scale(1.09);
+    cursor: pointer;
+}
+
+.largeposter {
+    max-height: 600px;
+}
