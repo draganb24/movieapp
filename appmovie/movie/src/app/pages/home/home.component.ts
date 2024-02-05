@@ -4,6 +4,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MoviePosterComponent } from 'app/shared/movie-poster.component';
+import { Observable, forkJoin, map } from 'rxjs';
 
 interface MovieResult {
   results: any[];
@@ -72,25 +73,39 @@ export class HomeComponent implements OnInit {
   }
 
   private fetchData() {
-    this.fetchDataByCategory('bannerApiData', 'bannerResult');
-    this.fetchDataByCategory('trendingMovieApiData', 'trendingMovieResult');
-    this.fetchDataByCategory('fetchActionMovies', 'actionMovieResult');
-    this.fetchDataByCategory('fetchAdventureMovies', 'adventureMovieResult');
-    this.fetchDataByCategory('fetchAnimationMovies', 'animationMovieResult');
-    this.fetchDataByCategory('fetchComedyMovies', 'comedyMovieResult');
-    this.fetchDataByCategory('fetchDocumentaryMovies', 'documentaryMovieResult');
-    this.fetchDataByCategory('fetchScienceFictionMovies', 'scienceFictionMovieResult');
-    this.fetchDataByCategory('fetchThrillerMovies', 'thrillerMovieResult');
-  }
-  
-  private fetchDataByCategory(apiMethod: string, resultArray: keyof HomeResults) {
-    this.service[apiMethod]().subscribe(
-      (result: MovieResult) => {
-        this.results[resultArray] = result;
+    const requests: Observable<MovieResult>[] = [
+      this.createRequest('bannerApiData'),
+      this.createRequest('trendingMovieApiData'),
+      this.createRequest('fetchActionMovies'),
+      this.createRequest('fetchAdventureMovies'),
+      this.createRequest('fetchAnimationMovies'),
+      this.createRequest('fetchComedyMovies'),
+      this.createRequest('fetchDocumentaryMovies'),
+      this.createRequest('fetchScienceFictionMovies'),
+      this.createRequest('fetchThrillerMovies'),
+    ];
+
+    forkJoin(requests).subscribe({
+      next: (results: MovieResult[]) => {
+        this.results.bannerResult = results[0];
+        this.results.trendingMovieResult = results[1];
+        this.results.actionMovieResult = results[2];
+        this.results.adventureMovieResult = results[3];
+        this.results.animationMovieResult = results[4];
+        this.results.comedyMovieResult = results[5];
+        this.results.documentaryMovieResult = results[6];
+        this.results.scienceFictionMovieResult = results[7];
+        this.results.thrillerMovieResult = results[8];
       },
-      (error: any) => {
-        console.error(`Error fetching data for ${resultArray}:`, error);
+      error: (error: any) => {
+        console.error('Error fetching data:', error);
       }
+    });
+  }
+
+  private createRequest(apiMethod: string): Observable<MovieResult> {
+    return this.service[apiMethod]().pipe(
+      map((result: MovieResult) => result)
     );
   }
 }
