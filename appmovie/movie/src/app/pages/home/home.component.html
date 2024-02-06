@@ -24,10 +24,10 @@
 <!-- banner end  -->
 <div class="contain mt-3 mb-5 p-4">
   <!-- movie categories -->
-  <div *ngFor="let category of categories" class="row mt-4">
+  <div *ngFor="let category of movieCategories" class="row mt-4">
     <h5 class="text-white">{{ category.title }}</h5>
     <div class="rowposter mt-3 p-2">
-      <app-movie-poster *ngFor="let movie of results[category.resultKey]?.results" [movie]="movie" />
+      <app-movie-poster *ngFor="let movie of results[category.categoryResultKey]?.results" [movie]="movie" />
     </div>
   </div>
 </div>

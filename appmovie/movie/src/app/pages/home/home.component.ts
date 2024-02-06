@@ -29,15 +29,21 @@ export class HomeComponent implements OnInit {
     thrillerMovieResult: { results: [] },
   };
 
-  categories: MovieCategory[] = [
-    { title: 'Trending Movies', resultKey: 'trendingMovieResult' },
-    { title: 'Action Movies', resultKey: 'actionMovieResult' },
-    { title: 'Adventure Movies', resultKey: 'adventureMovieResult' },
-    { title: 'Animation Movies', resultKey: 'animationMovieResult' },
-    { title: 'Comedy Movies', resultKey: 'comedyMovieResult' },
-    { title: 'Documentary Movies', resultKey: 'documentaryMovieResult' },
-    { title: 'Science-Fiction Movies', resultKey: 'scienceFictionMovieResult' },
-    { title: 'Thriller Movies', resultKey: 'thrillerMovieResult' },
+  movieCategories: MovieCategory[] = [
+    { title: 'Trending Movies', categoryResultKey: 'trendingMovieResult' },
+    { title: 'Action Movies', categoryResultKey: 'actionMovieResult' },
+    { title: 'Adventure Movies', categoryResultKey: 'adventureMovieResult' },
+    { title: 'Animation Movies', categoryResultKey: 'animationMovieResult' },
+    { title: 'Comedy Movies', categoryResultKey: 'comedyMovieResult' },
+    {
+      title: 'Documentary Movies',
+      categoryResultKey: 'documentaryMovieResult',
+    },
+    {
+      title: 'Science-Fiction Movies',
+      categoryResultKey: 'scienceFictionMovieResult',
+    },
+    { title: 'Thriller Movies', categoryResultKey: 'thrillerMovieResult' },
   ];
 
   constructor(
@@ -48,7 +54,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTitleAndMetaTags();
-    this.fetchData();
+    this.fetchMovieData();
   }
 
   private setTitleAndMetaTags() {
@@ -59,20 +65,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private fetchData() {
-    const requests: Observable<MovieResult>[] = [
-      this.createRequest('bannerApiData'),
-      this.createRequest('trendingMovieApiData'),
-      this.createRequest('fetchActionMovies'),
-      this.createRequest('fetchAdventureMovies'),
-      this.createRequest('fetchAnimationMovies'),
-      this.createRequest('fetchComedyMovies'),
-      this.createRequest('fetchDocumentaryMovies'),
-      this.createRequest('fetchScienceFictionMovies'),
-      this.createRequest('fetchThrillerMovies'),
+  private fetchMovieData() {
+    const movieRequests: Observable<MovieResult>[] = [
+      this.createMovieRequest('bannerApiData'),
+      this.createMovieRequest('trendingMovieApiData'),
+      this.createMovieRequest('fetchActionMovies'),
+      this.createMovieRequest('fetchAdventureMovies'),
+      this.createMovieRequest('fetchAnimationMovies'),
+      this.createMovieRequest('fetchComedyMovies'),
+      this.createMovieRequest('fetchDocumentaryMovies'),
+      this.createMovieRequest('fetchScienceFictionMovies'),
+      this.createMovieRequest('fetchThrillerMovies'),
     ];
 
-    forkJoin(requests).subscribe({
+    forkJoin(movieRequests).subscribe({
       next: (results: MovieResult[]) => {
         this.results.bannerResult = results[0];
         this.results.trendingMovieResult = results[1];
@@ -84,13 +90,13 @@ export class HomeComponent implements OnInit {
         this.results.scienceFictionMovieResult = results[7];
         this.results.thrillerMovieResult = results[8];
       },
-      error: (error: any) => {
+      error: (error: unknown) => {
         console.error('Error fetching data:', error);
       },
     });
   }
 
-  private createRequest(apiMethod: string): Observable<MovieResult> {
+  private createMovieRequest(apiMethod: string): Observable<MovieResult> {
     return this.service[apiMethod]().pipe(map((result: MovieResult) => result));
   }
 }
