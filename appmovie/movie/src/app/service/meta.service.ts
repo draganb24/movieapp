@@ -11,7 +11,7 @@ export class MetaService {
     private metaService: Meta
   ) {}
 
-  updatePageMeta(movieDetail: MovieDetail): void {
+  updateMoviePageMeta(movieDetail: MovieDetail): void {
     this.titleService.setTitle(
       `${movieDetail.original_title} | ${movieDetail.tagline}`
     );

@@ -23,8 +23,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: MovieApiService,
-    private router: ActivatedRoute,
-    private metaUpdateService: MetaService
+    private activatedRoute: ActivatedRoute,
+    private movieMetaService: MetaService
   ) {}
 
   ngOnInit(): void {
@@ -37,16 +37,16 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   async loadMovieDetails() {
-    const getParamId = this.router.snapshot.paramMap.get('id');
+    const movieId = this.activatedRoute.snapshot.paramMap.get('id');
 
     forkJoin({
-      movieDetails: this.service.getMovieDetails(getParamId),
-      videoResult: this.service.getMovieVideo(getParamId),
-      castResult: this.service.getMovieCast(getParamId),
+      movieDetails: this.service.getMovieDetails(movieId),
+      videoResult: this.service.getMovieVideo(movieId),
+      castResult: this.service.getMovieCast(movieId),
     }).subscribe({
       next: ({ movieDetails, videoResult, castResult }) => {
         this.getMovieDetailResult = movieDetails;
-        this.updatePageMeta();
+        this.updateMoviePageMeta();
 
         const trailer = videoResult.results.find(
           (element: any) => element.type === 'Trailer'
@@ -61,9 +61,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updatePageMeta(): void {
+  private updateMoviePageMeta(): void {
     if (this.getMovieDetailResult) {
-      this.metaUpdateService.updatePageMeta(this.getMovieDetailResult);
+      this.movieMetaService.updateMoviePageMeta(this.getMovieDetailResult);
     }
   }
 }
