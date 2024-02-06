@@ -1,11 +1,9 @@
-button
-{
+button {
     background-color: #E50914;
     color: #ffffff;
 }
 
-button:hover
-{
+button:hover {
     background-color: #E50914;
     color: #ffffff;
 }
@@ -15,7 +13,6 @@ img{
     cursor: pointer;
 }
 
-h5
-{
+h5 {
     color: #ffffff;
 }
