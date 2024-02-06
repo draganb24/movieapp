@@ -12,7 +12,11 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterModule],
 })
+
 export class MovieSearchComponent implements OnInit {
+  searching = false;
+  searchResults: any;
+
   constructor(
     private service: MovieApiService,
     private title: Title,
@@ -31,16 +35,21 @@ export class MovieSearchComponent implements OnInit {
     });
   }
 
-  searchResults: any;
   searchForm = new FormGroup({
     movieName: new FormControl(null),
   });
 
   searchMovies() {
-    console.log(this.searchForm.value, 'searchform#');
-    this.service.getSearchMovie(this.searchForm.value).subscribe(result => {
-      console.log(result, 'searchmovie##');
-      this.searchResults = result.results;
+    this.searching = true;
+    this.service.getSearchMovie(this.searchForm.value).subscribe({
+      next: search => {
+        this.searchResults = search.results;
+        this.searching = false;
+      },
+      error: error => {
+        console.error('Error fetching search results:', error);
+        this.searching = false;
+      },
     });
   }
 }

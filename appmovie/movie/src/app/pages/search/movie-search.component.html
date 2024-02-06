@@ -9,10 +9,20 @@
             </div>
         </div>
     </form>
+    <!-- Spinner -->
+    <div class="text-center mt-3" *ngIf="searching">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <!-- No Results Message -->
+    <div class="text-center mt-3" *ngIf="!searching && searchResults.length === 0">
+        No results found.
+    </div>
     <div class="row mt-5">
-        <div class="row mt-5">
-            <ng-container *ngFor="let searchResult of searchResults">
-                <div class="col-lg-4">
+        <ng-container *ngIf="!searching && searchResults.length > 0">
+            <div class="row mt-5">
+                <div class="col-lg-4" *ngFor="let searchResult of searchResults">
                     <div class="row" *ngIf="searchResult.poster_path">
                         <div class="col-lg-3 mt-4 mb-4">
                             <img src="https://image.tmdb.org/t/p/original/{{ searchResult.poster_path }}"
@@ -23,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </ng-container>
-        </div>
+            </div>
+        </ng-container>
     </div>
 </div>
