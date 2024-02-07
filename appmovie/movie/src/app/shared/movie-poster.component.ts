@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
     <img
       [src]="getImageUrl()"
       class="rowimg largeposter"
+      loading="lazy"
       alt="..."
       [routerLink]="['/movie', movie.id]" />
   `,
