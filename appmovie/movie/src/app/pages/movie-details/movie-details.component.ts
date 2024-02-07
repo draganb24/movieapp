@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieApiService } from 'app/service/movie-api.service';
-import { NgFor, NgIf } from '@angular/common';
+
 import { Subject, forkJoin } from 'rxjs';
 import { MovieDetail } from 'app/models/movie-detail.interface';
 import { MovieVideo } from 'app/models/movie-video.interface';
@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css'],
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [],
   providers: [HttpClientModule, MovieApiService]
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {

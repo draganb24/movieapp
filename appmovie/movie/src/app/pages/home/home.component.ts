@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MoviePosterComponent } from 'app/shared/movie-poster.component';
 import { Observable, forkJoin, map } from 'rxjs';
 import { MovieResult } from 'app/models/movie-result.interface';
@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [MoviePosterComponent, NgClass, NgFor],
+  imports: [MoviePosterComponent, NgClass],
   providers: [HttpClientModule, MovieApiService]
 })
 export class HomeComponent implements OnInit {

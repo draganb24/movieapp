@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './movie-search.component.html',
   styleUrls: ['./movie-search.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule, NgIf, NgFor],
+  imports: [ReactiveFormsModule, RouterModule],
   providers: [HttpClientModule, MovieApiService]
 })
 
