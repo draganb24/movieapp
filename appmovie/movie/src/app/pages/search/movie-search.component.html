@@ -16,11 +16,11 @@
         </div>
     </div>
     <!-- No Results Message -->
-    <div class="text-center mt-3" *ngIf="!searching && searchResults.length === 0">
+    <div class="text-center mt-3" *ngIf="!searching && searchResults?.length === 0">
         No results found.
     </div>
     <div class="row mt-5">
-        <ng-container *ngIf="!searching && searchResults.length > 0">
+        <ng-container *ngIf="!searching && searchResults?.length > 0">
             <div class="row mt-5">
                 <div class="col-lg-4" *ngFor="let searchResult of searchResults">
                     <div class="row" *ngIf="searchResult.poster_path">

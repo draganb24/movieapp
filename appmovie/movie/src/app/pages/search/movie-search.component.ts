@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
   templateUrl: './movie-search.component.html',
   styleUrls: ['./movie-search.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule, NgIf, NgFor],
+  providers: [HttpClientModule, MovieApiService]
 })
 
 export class MovieSearchComponent implements OnInit {

@@ -1,19 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieApiService } from 'app/service/movie-api.service';
-import { CommonModule } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Subject, forkJoin } from 'rxjs';
 import { MovieDetail } from 'app/models/movie-detail.interface';
 import { MovieVideo } from 'app/models/movie-video.interface';
 import { MovieCast } from 'app/models/movie-cast.interface';
 import { MetaService } from 'app/service/meta.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgIf, NgFor],
+  providers: [HttpClientModule, MovieApiService]
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();

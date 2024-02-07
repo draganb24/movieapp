@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieApiService } from 'app/service/movie-api.service';
 import { Title, Meta } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgClass, NgFor } from '@angular/common';
 import { MoviePosterComponent } from 'app/shared/movie-poster.component';
 import { Observable, forkJoin, map } from 'rxjs';
 import { MovieResult } from 'app/models/movie-result.interface';
 import { HomeResults } from 'app/models/home-results.interface';
 import { MovieCategory } from 'app/models/movie-category.interface';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule, MoviePosterComponent],
+  imports: [MoviePosterComponent, NgClass, NgFor],
+  providers: [HttpClientModule, MovieApiService]
 })
 export class HomeComponent implements OnInit {
   results: HomeResults = {
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit {
     private service: MovieApiService,
     private title: Title,
     private meta: Meta
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.setTitleAndMetaTags();

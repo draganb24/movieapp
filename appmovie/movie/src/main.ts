@@ -1,21 +1,20 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {enableProdMode} from '@angular/core';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {AppComponent} from './app/app.component';
+import {provideRouter} from '@angular/router';
+import { rootRoutes } from 'app/root-routes';
+import { MovieApiService } from 'app/service/movie-api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 if (environment.production) {
   enableProdMode();
 }
 
-function bootstrap() {
-  platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .catch(err => console.error(err));
-}
-
-if (document.readyState === 'complete') {
-  bootstrap();
-} else {
-  document.addEventListener('DOMContentLoaded', bootstrap);
-}
+bootstrapApplication(AppComponent, { 
+  providers: [
+    provideRouter(rootRoutes),
+  ], 
+})
+  .catch(err => console.error(err));
