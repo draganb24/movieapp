@@ -77,10 +77,6 @@ export class MovieApiService {
     return this.http.get(this.getGenreUrl(MovieGenres.Thriller));
   }
 
-  fetchMoviesByGenre(genre: MovieGenres): Observable<any> {
-    return this.http.get(this.getGenreUrl(genre));
-  }
-
   private getGenreUrl(genre: MovieGenres): string {
     return `${this.baseurl}/discover/movie?api_key=${this.apikey}&with_genres=${genre}`;
   }

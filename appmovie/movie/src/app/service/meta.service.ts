@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { MovieDetail } from 'app/models/movie-detail.interface';
 
 @Injectable({
