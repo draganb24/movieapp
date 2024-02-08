@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieApiService } from 'app/service/movie-api.service';
-
 import { Subject, forkJoin } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { MovieDetail } from 'app/models/movie-detail.interface';
-import { MovieVideo } from 'app/models/movie-video.interface';
 import { MovieCast } from 'app/models/movie-cast.interface';
 import { MetaService } from 'app/service/meta.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   getMovieDetailResult: MovieDetail | undefined;
-  getMovieVideoResult: MovieVideo | undefined;
+  getMovieVideoResult: string | undefined 
   getMovieCastResult: MovieCast[] | undefined;
 
   constructor(
@@ -38,28 +37,29 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  async loadMovieDetails() {
+  loadMovieDetails() {
     const movieId = this.activatedRoute.snapshot.paramMap.get('id');
 
     forkJoin({
       movieDetails: this.service.getMovieDetails(movieId),
       videoResult: this.service.getMovieVideo(movieId),
       castResult: this.service.getMovieCast(movieId),
-    }).subscribe({
-      next: ({ movieDetails, videoResult, castResult }) => {
-        this.getMovieDetailResult = movieDetails;
-        this.updateMoviePageMeta();
-
-        const trailer = videoResult.results.find(
-          (element: any) => element.type === 'Trailer'
-        );
-        this.getMovieVideoResult = trailer ? trailer.key : undefined;
-
-        this.getMovieCastResult = castResult.cast;
-      },
-      error: error => {
+    }).pipe(
+      takeUntil(this.unsubscribe$),
+      catchError(error => {
         console.error('Error loading movie details:', error);
-      },
+        return [];
+      })
+    ).subscribe(({ movieDetails, videoResult, castResult }) => {
+      this.getMovieDetailResult = movieDetails;
+      this.updateMoviePageMeta();
+
+      const trailer = videoResult.results.find(
+        (element: any) => element.type === 'Trailer'
+      );
+      this.getMovieVideoResult = trailer ? trailer.key : undefined;
+
+      this.getMovieCastResult = castResult.cast;
     });
   }
 
