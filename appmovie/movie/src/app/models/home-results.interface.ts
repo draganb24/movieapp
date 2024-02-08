@@ -10,4 +10,5 @@ export interface HomeResults {
   documentaryMovieResult: MovieResult;
   scienceFictionMovieResult: MovieResult;
   thrillerMovieResult: MovieResult;
+  [key: string]: MovieResult; // Add index signature
 }
